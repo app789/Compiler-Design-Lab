@@ -1,0 +1,39 @@
+# Input: a set of states, S
+# Output: epsilon_closure(S)
+
+    Stack P.addAll(S) #a stack containing all states in S
+    Set C.addAll(S)   #the closure initially contains the states in S
+
+    while ! P.empty() do
+         s = P.pop()
+         for r in m(s, epsilon) do
+            # m(s, epsilon) is a set of states
+            if r not in C then
+                P.push(r)
+                C.add(r)
+            end if
+        end for
+
+    end while
+    return C
+
+------------------------------------------------------------------------------------------------------------------------
+Algorithm: e-closure
+Input: an NFA with e-moves N, a set P of states.
+Output: e-closure(P), which is P along with all states
+   reachable from P by a sequence of e-moves.
+Method: use stack S to carry out a depth-first search
+// black means in e-closure(P)
+color all states white
+color all states of P black
+push all states of P onto S
+while (S not empty) {
+   u = pop(S)
+   for (each edge (u,v) labeled e) {
+      if (v has color white) {
+         color v black
+         push v
+      }
+   }
+}
+e-closure(P) = black states
