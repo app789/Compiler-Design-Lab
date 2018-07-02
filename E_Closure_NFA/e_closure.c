@@ -14,7 +14,7 @@ int  k = 0;
 
 char a[20];
 
-int  transitions[5][3];
+int  transitions[4][5];
 int  visited[10];
 
 int  MAXSIZE = 8;       
@@ -36,13 +36,6 @@ int isfull()
    else
       return 0;
 }
-
-
-int peek() 
-{
-   return stack[top];
-}
-
 
 int pop() 
 {
@@ -94,16 +87,16 @@ void epsilon_closure(int state)
 	{
 		int u = pop();
 
-		j = 0;
+		j = 1;
 		while(j < 5)
 		{
 			//if there is an epsilon transition from the state 'u' to 'v'
-			if(transitions[j][0] == u && transitions[j][1] == -1) 
+			if(transitions[j][0] == u && transitions[j][4] != 232) //ASCII of Φ = 232
 			{
-				if(! IsVisited(transitions[j][2]))
+				if(! IsVisited(transitions[j][4]))
 				{
-					visited[transitions[j][2]] = 1;
-					push(transitions[j][2]);
+					visited[transitions[j][4]] = 1;
+					push(transitions[j][4]);
 				}
 				
 			}
@@ -156,9 +149,17 @@ int main()
 		printf("q%d\n",states[i]);
 	}
 	
-	i = 0;
+	i = 1;
 	flag = 0;
 	//Reading the transition table
+	
+	for(int i = 0; i < 4; i++){
+		for(int j = 0; j < 5; j++)
+		{
+			transitions[i][j] = 232;
+		}
+		//printf("\n");
+	}	
 	while(!feof(file))
 	{
 		fgets(a,100,file);
@@ -169,16 +170,28 @@ int main()
 		if(flag == 1 && a[0] != '/')
 		{	
 			j = 0;
-			transitions[i][j++] = a[1] - '0';
+			//found a way to store the transition table in a matrix
 			if(a[3] == 'e')
-				transitions[i][j++] = -1;
+				transitions[(a[1] - '0') + 1][4] = a[6] - '0';
+			
+			else	
+				transitions[(a[1] - '0') + 1][(a[3] - '0') + 1] = a[6] - '0';
+			if(a[3] != 'e')
+				transitions[0][a[3] - '0' + 1] = a[3] - '0';		//input
 			else
-				transitions[i][j++] = a[3] - '0';
-			transitions[i][j] = a[6] - '0';
-			i++;
+				transitions[0][4] = -1;		// epsilon input
+			transitions[(a[1] - '0') + 1][0] = a[1] - '0'; //initial state
+			
 		}
 	}
 	printf("\nTransitions read\n");
+	for(int i = 0; i < 4; i++){
+		for(int j = 0; j < 5; j++)
+		{
+			printf("%d\t",transitions[i][j]);
+		}
+		printf("\n");
+	}	
 	
 	//Calling e-closure for all the states	
 	for(k = 0; k < numberOfStates; k++)
