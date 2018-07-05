@@ -118,7 +118,7 @@ void epsilon_closure(int state)
 
 int main()
 {
-	file = fopen("nfa_2.txt","r");
+	file = fopen("nfa.txt","r");
 
 	if (file == NULL) {
 		perror("fopen");
@@ -163,11 +163,11 @@ int main()
 	while(!feof(file))
 	{
 		fgets(a,100,file);
-		if(a[0] == '/')
+		if(a[3] == 't')    //detected the line "//transitions..." in the input.
 		{	
 			flag = 1;
 		}
-		if(flag == 1 && a[0] != '/')
+		if(flag == 1 && a[0] != '/')    //if true, this line onwards we read the transitions
 		{	
 			j = 0;
 			//found a way to store the transition table in a matrix
