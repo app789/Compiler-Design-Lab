@@ -1,0 +1,13 @@
+//states
+q0 q1 q2
+//input_symbols
+0 1
+//start_state
+q0
+//final_state
+q2
+//transitions of the form : intial_state  input  final_state
+q0 0 q0
+q0 1 q0,q1
+q1 0 q2
+q1 1 q2
