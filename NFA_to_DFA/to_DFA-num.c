@@ -251,50 +251,47 @@ int Update(int *set)
 		return 0;
 }
 //FINDS THE NEW FINAL STATES
-void FindFinal()
-{
-	int i,j,k;
-	for(i = 0; i < 10; i++){
-		for(j = 0; Q[i][j] != -1; j++){
-			for(k = 0; k < no_of_final; k++){
-				if(Q[i][j] == final_states[k])
-				{	
-					FINAL_STATES[i] = Q[i];
-					NO_OF_FINAL++;
-				}
-			}
-		}
-	}
-	//Write to the file
-	fprintf(fout,"\nFinal States : ");
-	k = i = 0;
-	while(k >= 0){
-		if(FINAL_STATES[i] != NULL)
-		{	
-			fprintf(fout,"{");
-			for(j = 0; FINAL_STATES[i][j] != -1; j++){
-				if(FINAL_STATES[i][j+1] != -1)
-					fprintf(fout,"q%d,",FINAL_STATES[i][j]);
-				else
-					fprintf(fout,"q%d",FINAL_STATES[i][j]);
-			}
-			fprintf(fout,"}");
-			k++;
-		}
-		i++;
-		if(k == NO_OF_FINAL) break;
-	}
+#define FindFinal {									\
+	int i,j,k;									\
+	for(i = 0; i < 10; i++){							\
+		for(j = 0; Q[i][j] != -1; j++){						\
+			for(k = 0; k < no_of_final; k++){				\
+				if(Q[i][j] == final_states[k])				\
+				{							\
+					FINAL_STATES[i] = Q[i];				\
+					NO_OF_FINAL++;					\
+				}							\
+			}								\
+		}									\
+	}										\
+	fprintf(fout,"\nFinal States : ");						\
+	k = i = 0;									\
+	while(k >= 0){									\
+		if(FINAL_STATES[i] != NULL)						\
+		{									\
+			fprintf(fout,"{");						\
+			for(j = 0; FINAL_STATES[i][j] != -1; j++){			\
+				if(FINAL_STATES[i][j+1] != -1)				\
+					fprintf(fout,"q%d,",FINAL_STATES[i][j]);	\
+				else							\
+					fprintf(fout,"q%d",FINAL_STATES[i][j]);		\
+			}								\
+			fprintf(fout,"}");						\
+			k++;								\
+		}									\
+		i++;									\
+		if(k == NO_OF_FINAL) break;						\
+	}										\
 }
 //FINDS THE NEW START STATE
-void FindStart()
-{
-	fprintf(fout,"Start states:");
-	for(i = 0; i < no_of_starts; i++){
-		Q[i][0] = start_states[i];
-		fprintf(fout,"{q%d}",Q[i][0]);
+#define FindStart {								\
+		fprintf(fout,"Start states:");					\
+		for(i = 0; i < no_of_starts; i++){				\
+			Q[i][0] = start_states[i];				\
+			fprintf(fout,"{q%d}",Q[i][0]);				\
+		}								\
+		fprintf(fout,"\n\n");						\
 	}
-	fprintf(fout,"\n\n");
-}
 
 int main()
 {
@@ -307,10 +304,11 @@ int main()
 	//Q[0][0] = 0;
 	Read();   //Reads the NFA
 
-	FindStart();
+	FindStart
 	
 	int complete = Update(Q[0]);             
-	if(complete == 0) printf("DFA READY!");
+	if(complete == 0) printf("\nDFA READY\n");
+	else printf("\nUnexpected Error!\n");
 
 	//Write to the file
 	fprintf(fout,"\nStates : ");
@@ -326,7 +324,7 @@ int main()
 		if(Q[i+1][0] == -1) break;
 	}
 
-	FindFinal();
+	FindFinal
 	
 	return 0;
 }
