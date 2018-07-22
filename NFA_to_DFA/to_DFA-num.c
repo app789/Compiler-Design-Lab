@@ -130,7 +130,7 @@ void Read()
 		}
 		if (flag == 1 && a[0] != '/')
 		{
-			if(a[1] >= '0' && a[1] <= '9')     //IF states are represented as numbers
+			if(a[1] >= '0' && a[1] <= '9')     			//IF states are represented as numbers
 				states[i++] = a[1] - '0';
 			else							//IF states are represented as aplhabets
 				states[i++] = a[1];
@@ -157,35 +157,35 @@ void Read()
 			transitions[i][j][k] = 232;
 		}
 	}
-	for(i = 1; i <= no_of_inputs; i++)   //initialize the top row with input
+	for(i = 1; i <= no_of_inputs; i++)   					//initialize the top row with input
 		transitions[0][i][0] = inputs[i-1];
 	
 	while(!feof(file))
 	{
 		fgets(a,100,file);
-        n = 1;
-        for(i = 5; i < 50; i++){    //50 or strlen(a)
-            if(a[i] == ',')
-                n++;
-        }
+        	n = 1;
+        	for(i = 5; i < 50; i++){   					 //50 or strlen(a)
+            		if(a[i] == ',')
+                	n++;
+        	}
 		if(a[0] == 'q')
 		{	
-			for(j = 1; j <= no_of_inputs; j++)  //Get to the column of the input 
+			for(j = 1; j <= no_of_inputs; j++)  			//Get to the column of the input 
 			{	
 				if(transitions[0][j][0] ==  a[3] - '0')
 					break;
 			}
-            i = 0;
-            while(n > 0){
+           	 	i = 0;
+           	 	while(n > 0){
 				transitions[(a[1] - '0') + 1][j][i] = a[6 + (i * 3)] - '0';
-                i++;
+                		i++;
 				n--;
-            }
-            transitions[(a[1] - '0') + 1][0][0] = a[1] - '0'; //initial state
+            		}
+           	 	transitions[(a[1] - '0') + 1][0][0] = a[1] - '0'; 	//initial state
 		}
 	}
 	
-	for(i = 0; i < numberOfStates; i++ )   //initialize first column with all states
+	for(i = 0; i < numberOfStates; i++ )  					 //initialize first column with all states
 	{	
 		if(transitions[i][0][0] == 232)
 			transitions[i][0][0] = states[i-1];
@@ -217,10 +217,10 @@ int InQ_()
 			if(Q[i][j] != -1)
 				map2[Q[i][j]] = 1;
 		}
-		if(EqualTo(map2)){      //if the state is already present
+		if(EqualTo(map2)){      			//if the state is already present
 			return true;
 		}
-		for(int k = 0; k < 10; k++) //Clear map2
+		for(int k = 0; k < 10; k++) 			//Clear map2
 			map2[k] = 0;
 	}
 	return false;
@@ -235,7 +235,7 @@ int Update(int *set)
 			ClearMap();
 			LookUp(set,inputs[k]);
 			if(!InQ_() && transitionPresent){  			//if new state
-				for(i = 0; Q[i][0] != -1; i++){;}     //to find a blank row in Q
+				for(i = 0; Q[i][0] != -1; i++){;}     		//to find a blank row in Q
 				indx = 0;
 				for(j = 0; j < 10; j++){
 					if(map[j] == 1){
