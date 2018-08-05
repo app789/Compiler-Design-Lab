@@ -54,22 +54,6 @@ int choose()
     else
             chosenDistance = 1;
     return chosenDistance;        
-    /*
-	int chosenDistance = 1;
-	if(chosenDistance <= remainingDistance/2 ){
-		//if even then choose odd if possible
-		if(remainingDistance % 2 == 0){
-			chosenDistance = 1;
-		}
-		//if odd then choose even if possible
-		else{
-			if(remainingDistance - 2 == 1 || remainingDistance - 2 == 2 || remainingDistance - 2 == 4 ){
-				chosenDistance = 4;
-			}
-			if(remainingDistance - 4 == 1 || remainingDistance - 4 == 2 || remainingDistance - 4 == 4 ){
-				chosenDistance = 2;
-			}
-		}
-	}*/
+    
 }
 	
