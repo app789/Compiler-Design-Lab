@@ -53,7 +53,7 @@ int choose()
             chosenDistance = 4;
     else
             chosenDistance = 1;
-    return chosenDistance;        
+    return chosenDistance;  //      
     
 }
 	
