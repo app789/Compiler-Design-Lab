@@ -5,6 +5,7 @@
 FILE *fi,*fo,*fop,*fk;
 int flag = 0;
 int i = 1;
+int string = 0;
 char c,t,a[15],ch[15],file[20];
 
 void CheckOperator()
@@ -16,6 +17,12 @@ void CheckOperator()
 			fscanf(fop,"%s",ch);
 			printf("\t\t%s\t:\t%s\n",a,ch);
 			flag = 1;
+			if(a[0] == '"' && string == 0){   //starting double_quotes
+				string = 1;
+			}
+			else if(a[0] == '"' && string == 1){    //ending double_quotes
+				string = 0;
+			}
 			break;
 		} 
 		fscanf(fop,"%s",ch);
@@ -32,7 +39,7 @@ void CheckKeyword()
 	{
 		if(strcmp(ch,a) == 0)
 		{
-			fscanf(fk,"%k",ch);
+			//fscanf(fk,"%k",ch);
 			printf("\t\t%s\t:\tKeyword\n",a);
 			flag = 1;
 			break;
@@ -100,6 +107,10 @@ int main()
 		{
 			if(isdigit(a[0]))
 				printf("\t\t%s\t:\tConstant\n",a);
+			else if(a[0] == '$') 
+				printf("\t\t%s\t:\tnew line delimiter\n",a);
+			else if(string == 1)
+				printf("\t\t%s\t:\tstring\n",a);
 			else
 				printf("\t\t%s\t:\tIdentifier\n",a);
 		}
