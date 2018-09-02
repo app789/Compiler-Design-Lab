@@ -8,5 +8,7 @@ All the work done during my Compiler Design Lab course for my B.Tech
 3.LexicalAnalyser <br />
 &nbsp;  Program to get tokens of all type in a piece of C code.<br />
 4.NFA_TO_DFA <br />
-&nbsp;This program takes an NFA as an input described in a file. Output will be the corresponding DFA. Output is written to a text file. The input must be described in the specific format for the program to work. <br />
+&nbsp;This program takes an NFA as an input described in a file. Output will be the corresponding DFA. Output is written to a text &nbsp;file. The input must be described in the specific format for the program to work. <br />
+5.Lex Tool<br />
+&nbsp;  Define all the rules and parse the input program
 
