@@ -1,55 +1,32 @@
-%{
-	int COMMENT=0;
-%}
-	identifier [a-zA-Z][a-zA-Z0-9]*
+digit 	[0-9]*
+letter	[a-zA-Z]
 %%
-	#.* 	{printf("\n%s is a preprocessor directive",yytext);}
-	int | char | while | for | do | if | else | void | return | goto {printf("\n\t%s is a keyword",yytext);}
-	"/*" 	{COMMENT=1;}{printf("\n\t %s is a COMMENT",yytext);}
-	{identifier}\( {if(!COMMENT)printf("\nFUNCTION \n\t%s",yytext);}
-	\{  {if(!COMMENT)printf("\n BLOCK BEGINS");}
-	\}  {if(!COMMENT)printf("BLOCK ENDS ");}
-	{identifier}(\[[0-9]*\])? {if(!COMMENT) printf("\n %s IDENTIFIER",yytext);}
-	\".*\" {if(!COMMENT)printf("\n\t %s is a STRING",yytext);}
-	[0-9]+ {if(!COMMENT) printf("\n %s is a NUMBER ",yytext);}
-	\)(\:)? {if(!COMMENT)printf("\n\t");ECHO;printf("\n");}
-	\( ECHO;
-	= {if(!COMMENT)printf("\n\t %s is an ASSIGNMENT OPERATOR",yytext);}
-	\<= |
-	\>= |
-	\< |
-	== |
-	\> {if(!COMMENT) printf("\n\t%s is a RELATIONAL OPERATOR",yytext);}
+"int"|"return"|"char"|"if"|"else"|"for"		{printf("\n%s is a keyword.",yytext);}
+{digit}						{printf("\n%s is a number.",yytext);}
+("_")*{letter}("_"|{letter}|{digit})*		{printf("\n%s is an identifier.",yytext);}
+#.* 		{ printf("\n%s is a PREPROCESSOR DIRECTIVE",yytext);}
+\/\/.* 		{ printf("\n%s is a comment",yytext);}
+\( 		{ printf("\n%s is a open-Paranthesis",yytext);}
+\)		{ printf("\n%s is a closing-Parantheses",yytext);}
+"="|"-"|"+"|"/"|"<"	{ printf("\n%s is an operator",yytext);}
+\{		{ printf("\n%s is a brace",yytext);}
+\}		{ printf("\n%s is a brace",yytext);}
+\[		{ printf("\n%s is bracket",yytext);}
+\]		{ printf("\n%s is bracket",yytext);}
+\;		{printf("\n%s is a delimiter",yytext);}
 %%
-int main(int argc, char **argv)
-{
+int main(){
+	
 	FILE *file;
-	file=fopen("var.c","r");
+	file = fopen("input.c","r");
 	if(!file)
-	{
+	{	
 		printf("could not open the file");
 		exit(0);
-	}
-	yyin=file;
+	}		
+	yyin = file;
+
 	yylex();
-	printf("\n");
-	return(0);
+	printf("\nScanned!");
+	return 0;
 }
-int yywrap()
-{
-	return(1);
-}
-
-INPUT:
-//var.c
-#include<stdio.h>
-#include<conio.h>
-void main()
-{
-int a,b,c;
-a=1;
-b=2;
-c=a+b;
-printf("Sum:%d",c);
-}
-
