@@ -1,32 +1,44 @@
-digit 	[0-9]*
+digit	-?(([0-9]+)|([0-9]*\.[0-9]+))
 letter	[a-zA-Z]
+line 	\n 
+quoted 	\"([^"])*\"
+keyword	"int"|"main"|"if"|"for"|"else"|"return"|"printf"|"float"|"char"|"double"|"void"
+%{
+	int line_number = 1;  
+	
+%}
 %%
-"int"|"return"|"char"|"if"|"else"|"for"		{printf("\n%s is a keyword.",yytext);}
-{digit}						{printf("\n%s is a number.",yytext);}
-("_")*{letter}("_"|{letter}|{digit})*		{printf("\n%s is an identifier.",yytext);}
-#.* 		{ printf("\n%s is a PREPROCESSOR DIRECTIVE",yytext);}
-\/\/.* 		{ printf("\n%s is a comment",yytext);}
-\( 		{ printf("\n%s is a open-Paranthesis",yytext);}
-\)		{ printf("\n%s is a closing-Parantheses",yytext);}
-"="|"-"|"+"|"/"|"<"	{ printf("\n%s is an operator",yytext);}
-\{		{ printf("\n%s is a brace",yytext);}
-\}		{ printf("\n%s is a brace",yytext);}
-\[		{ printf("\n%s is bracket",yytext);}
-\]		{ printf("\n%s is bracket",yytext);}
-\;		{printf("\n%s is a delimiter",yytext);}
+#.* 					{printf("\n%s\t:\tPreprocessor\tline:%d\t",yytext,line_number);}
+
+{digit}*				{printf("\n%s\t:\tNumber\tline:%d\t",yytext,line_number);}
+{letter}+\(({letter}|{digit})*\)	{printf("\n%s\t:\tFunction\tline:%d\t",yytext,line_number);}
+{keyword} 				{printf("\n%s\t:\tKeyword\tline:%d\t",yytext,line_number);}
+{line} 					{ line_number++; } 	
+("_")*{letter}("_"|{letter}|{digit})*	{ printf("\n%s\t:\tIdentifier\tline:%d\t",yytext,line_number);}
+\(					{printf("\n%s\t:\tOpen-parantheses\tline:%d\t",yytext,line_number);}
+\)					{printf("\n%s\t:\tClose-parantheses\tline:%d\t",yytext,line_number);}
+\{					{printf("\n%s\t:\tBrace BLOCK BEGINS\tline:%d\t",yytext,line_number);}
+\}					{printf("\n%s\t:\tBrace BLOCK ENDS\tline:%d\t",yytext,line_number);}
+\;					{printf("\n%s\t:\tDelimiter\tline:%d\t",yytext,line_number);}
+\/\/.*					{printf("\n%s\t:\tComment",yytext);}
+
+\-|\+|\/|\*				{printf("\n%s\t:\tArithmetic Operator\tline:%d\t",yytext,line_number);}
+\<|\>|\<=|\=>|\!=|\==			{printf("\n%s\t:\tRelational Operator\tline:%d\t",yytext,line_number);}
+\=					{printf("\n%s\t:\tAssignment\tline:%d\t",yytext,line_number);}
+\"					{printf("\n%s\t:\tDoublequotes\tline:%d\t",yytext,line_number);}
+{quoted}				{printf("\n%s\t:\tQuoted string\t line:%d\t",yytext,line_number);}
 %%
 int main(){
-	
 	FILE *file;
 	file = fopen("input.c","r");
-	if(!file)
-	{	
-		printf("could not open the file");
-		exit(0);
-	}		
-	yyin = file;
+	if(file){
+		yyin = file;
+		yylex();
 
-	yylex();
-	printf("\nScanned!");
+	}
+	else
+		printf("\nNo input file");
+	printf("\nScanned!\n");
 	return 0;
 }
+
