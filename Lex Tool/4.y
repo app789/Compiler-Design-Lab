@@ -8,7 +8,7 @@
 stmt: var 
     ;
 var : LETTER  alpha_num
-    
+    | LETTER
     ;
 alpha_num: LETTER alpha_num
         | DIGIT alpha_num
