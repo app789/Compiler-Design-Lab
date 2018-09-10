@@ -1,13 +1,14 @@
 %{
-	#include<stdio.h>
+	#include <stdio.h>
+    #include <stdlib.h>
 %}
-%token 	LETTER DIGIT
+%token 	LETTER DIGIT 
 
 %%
-stmt: var
+stmt: var 
     ;
 var : LETTER  alpha_num
-    | 
+    
     ;
 alpha_num: LETTER alpha_num
         | DIGIT alpha_num
@@ -18,6 +19,7 @@ alpha_num: LETTER alpha_num
 void yyerror()
 {
   printf("invalid exp");
+  exit(0);
 }
 int main()
 {
