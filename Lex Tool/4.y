@@ -1,6 +1,7 @@
 %{
 	#include <stdio.h>
-    #include <stdlib.h>
+    int yylex();
+    int yyerror();
 %}
 %token 	LETTER DIGIT 
 
@@ -16,10 +17,10 @@ alpha_num: LETTER alpha_num
         |DIGIT
         ;
 %%
-void yyerror()
+int yyerror()
 {
   printf("invalid exp");
-  exit(0);
+  return 0;
 }
 int main()
 {
