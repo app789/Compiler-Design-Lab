@@ -1,11 +1,13 @@
 %{
 	#include<stdio.h>
+	int yylex();
+	int yyerror();
 %}
-%token 	ID 		NUMBER
-%left 	'+' 	'-'
+%token 	ID 	NUMBER
+%left 	'+' 	'-'      %{left-associative%}
 %left 	'*' 	'/'
 %%
-stmt:expr
+stmt: ID '=' expr ';'
     ;
 expr: expr '+' expr
     | expr '-' expr
@@ -16,9 +18,10 @@ expr: expr '+' expr
     | ID
     ;
 %%
-void yyerror()
+int yyerror()
 {
-  printf("invalid exp");
+  	printf("invalid exp");
+	return 0;
 }
 int main()
 {
