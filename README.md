@@ -12,5 +12,5 @@ All the work done during my Compiler Design Lab course for my B.Tech
 5.Lex Tool<br />
 &nbsp;  Define all the rules and parse the input program. I have implemented a simple lexical analyser.
 5.Recursive Descent parser<br />
-&nbsp;  Parses a given arithmetic expression and prints the result.
+&nbsp;  Parses a given arithmetic expression and prints the result.<br />
 
