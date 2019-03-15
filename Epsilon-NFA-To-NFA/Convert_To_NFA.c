@@ -1,5 +1,7 @@
+/*Source : AKhileswar */
+
 #include <stdio.h>     
-#include <string.h> 	//REMEMBER ME WHILE I'M GONE 
+#include <string.h> 	//WHEN I'M GONE 
 #include <errno.h>
 #include <stdlib.h>
 #include <time.h>
