@@ -1,4 +1,4 @@
-/*Source : AKhileswar */
+/*Source : Me */
 
 #include <stdio.h>     
 #include <string.h> 	//WHEN I'M GONE 
