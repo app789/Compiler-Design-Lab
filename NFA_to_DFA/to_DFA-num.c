@@ -1,4 +1,4 @@
-/* Source : Akhilewar */
+/* Source : Me */
 
 #include <stdio.h>
 #include <string.h>
@@ -103,12 +103,8 @@ void Read()
 			fscanf(file,"%s",a);
 			while(a[0] != '/')
 			{	
-				if(a[1] >= '0' && a[1] <= '9'){					//IF states are represented as numbers
-					start_states[no_of_starts++] = a[1] - '0';
-				}
-				else{
-					start_states[no_of_starts++] = a[1];		//IF states are represented as aplhabets
-				}
+				start_states[no_of_starts++] = a[1] - '0';
+				
 				fscanf(file,"%s",a);
 			}
 			flag = 0;
@@ -118,24 +114,16 @@ void Read()
 			fscanf(file,"%s",a);
 			while(a[0] != '/')
 			{
-				if(a[1] >= '0' && a[1] <= '9'){					//IF states are represented as numbers
-					final_states[no_of_final++] = a[1] - '0';
-					inFinal[a[1] - '0'] = 1;
-				}
-				else{
-					final_states[no_of_final++] = a[1];			//IF states are represented as aplhabets
-					inFinal[a[1] - '0'] = 1;
-				}
+				final_states[no_of_final++] = a[1] - '0';
+				inFinal[a[1] - '0'] = 1;
+				
 				fscanf(file,"%s",a);
 			}
 			break;
 		}
 		if (flag == 1 && a[0] != '/')
 		{
-			if(a[1] >= '0' && a[1] <= '9')     			//IF states are represented as numbers
-				states[i++] = a[1] - '0';
-			else							//IF states are represented as aplhabets
-				states[i++] = a[1];
+			states[i++] = a[1] - '0';
 		}
 		numberOfStates = i;	
 	}
